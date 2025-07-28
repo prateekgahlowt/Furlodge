@@ -1,0 +1,115 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+export default function RegisterPage() {
+  const [selectedRole, setSelectedRole] = useState<'owner' | 'sitter' | null>(null);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Banner */}
+      <div className="bg-blue-600">
+        <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between flex-wrap">
+            <div className="w-0 flex-1 flex items-center">
+              <span className="flex p-2 rounded-lg bg-blue-800">
+                <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                </svg>
+              </span>
+              <p className="ml-3 font-medium text-white truncate">
+                <span className="md:hidden">Welcome to FurLodge!</span>
+                <span className="hidden md:inline">Welcome to FurLodge - Your trusted partner for premium dog care services!</span>
+              </p>
+            </div>
+            <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+              <Link
+                href="/login"
+                className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Section with Image Banner */}
+      <div className="relative h-[300px]">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/banner.jpg"
+            alt="Happy dogs playing"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+            quality={100}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-black/20" />
+        </div>
+        <div className="relative h-full flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl drop-shadow-lg">
+              Register
+            </h1>
+            <p className="mt-3 max-w-md mx-auto text-base text-white sm:text-lg md:mt-5 md:text-xl md:max-w-3xl drop-shadow-md">
+              Join our community of dog lovers
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Registration Options */}
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Choose your role
+          </h2>
+          <p className="mt-4 text-lg text-gray-500">
+            Select whether you want to register as a dog owner or a dog sitter
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-2">
+          {/* Dog Owner Card */}
+          <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <h3 className="text-lg font-medium text-gray-900">Dog Owner</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Register as a dog owner to find trusted sitters for your furry friend
+              </p>
+              <div className="mt-5">
+                <Link
+                  href="/register/owner"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Register as Owner
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Dog Sitter Card */}
+          <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <h3 className="text-lg font-medium text-gray-900">Dog Sitter</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Register as a dog sitter to offer your services to dog owners
+              </p>
+              <div className="mt-5">
+                <Link
+                  href="/register/sitter"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Register as Sitter
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+} 
