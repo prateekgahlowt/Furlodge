@@ -2,7 +2,32 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+# Environment Setup
+
+Before running the project, you need to set up your environment variables.
+
+1. Copy the example environment file:
+   ```sh
+   cp .env.example .env
+   ```
+   > On Windows, you can use:  
+   > `copy .env.example .env`
+
+2. Open `.env` in your code editor and fill in the required values:
+   - `MONGODB_URI` – Your MongoDB connection string
+   - `DATABASE_URL` – (If using Postgres/Prisma) Your database connection string
+   - `JWT_SECRET` – A strong secret for JWT signing
+   - `EMAIL_HOST`, `EMAIL_USER`, `EMAIL_PASS` – Your email provider credentials
+   - `NEXTAUTH_URL`, `NEXTAUTH_SECRET` – (If using NextAuth) Your app URL and secret
+
+3. Never commit your real `.env` file or secrets to GitHub!
+   Only `.env.example` is tracked for reference.
+
+---
+
+That’s it! You’re ready to run the project.
+
+Now, run the development server:
 
 ```bash
 npm run dev
