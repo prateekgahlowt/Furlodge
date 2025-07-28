@@ -40,8 +40,25 @@ export default function OwnerPage() {
   const [selectedService, setSelectedService] = useState<PetBoardingService | null>(null);
 
   const handleBookingSubmit = async (formData: BookingFormData) => {
-    // Handle booking submission
-    console.log('Booking submitted:', formData);
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Booking confirmed! Check your email for confirmation details.');
+        setSelectedService(null);
+      } else {
+        alert('Failed to create booking. Please try again.');
+      }
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('Failed to create booking. Please try again.');
+    }
   };
 
   return (

@@ -55,15 +55,26 @@ export default function Home() {
     setSelectedService(null);
   };
 
-  const handleSubmitBooking = (formData: BookingFormData) => {
-    // Here you would typically send this data to your backend
-    console.log('Booking submitted:', { service: selectedService, formData });
-    
-    // Show success message
-    alert('Booking submitted successfully! We will contact you shortly.');
-    
-    // Close the form
-    setSelectedService(null);
+  const handleSubmitBooking = async (formData: BookingFormData) => {
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Booking confirmed! Check your email for confirmation details.');
+        setSelectedService(null);
+      } else {
+        alert('Failed to create booking. Please try again.');
+      }
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('Failed to create booking. Please try again.');
+    }
   };
 
   return (

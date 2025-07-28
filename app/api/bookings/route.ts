@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/app/lib/mongodb';
 import { Booking } from '@/app/models/Booking';
+import { sendBookingConfirmationEmail } from '@/app/lib/email';
 
 export async function POST(request: Request) {
   try {
@@ -12,8 +13,13 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     });
 
-    // Send confirmation email (mock)
-    await sendConfirmationEmail(newBooking);
+    // Send booking confirmation email
+    await sendBookingConfirmationEmail(newBooking.email, {
+      serviceName: newBooking.serviceName,
+      startDate: newBooking.startDate,
+      endDate: newBooking.endDate,
+      totalPrice: newBooking.totalPrice
+    });
 
     return NextResponse.json({ 
       success: true, 
@@ -46,9 +52,4 @@ export async function GET() {
   }
 }
 
-// Mock email sending function
-async function sendConfirmationEmail(booking: any) {
-  // In a real application, this would send an actual email
-  console.log('Sending confirmation email for booking:', booking._id);
-  return Promise.resolve();
-} 
+ 

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { sendVerificationEmail } from '@/app/lib/email';
+import crypto from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -33,6 +35,9 @@ export async function POST(request: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Generate email verification token
+    const emailVerificationToken = crypto.randomBytes(32).toString('hex');
+
     // Create user
     const user = await prisma.user.create({
       data: {
@@ -44,8 +49,17 @@ export async function POST(request: Request) {
         address,
         experience,
         services,
+        resetToken: emailVerificationToken, // Using resetToken field for verification
       },
     });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, emailVerificationToken);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      // Continue with registration even if email fails
+    }
 
     // Generate JWT token
     const token = jwt.sign(
